@@ -1,5 +1,7 @@
 import { useState, useEffect, Component } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Scene3D } from './Scene3D'
+import { useAuthStore } from '../store/authStore'
 import './LoginPage.css'
 
 class SceneErrorBoundary extends Component {
@@ -30,10 +32,8 @@ const T = {
     headline2: 'Your way.',
     email: 'your@company.com',
     password: 'Password',
-    name: 'Full name',
     company: 'Company name',
     signIn: 'Sign In',
-    createAccount: 'Create Account',
     or: 'or',
     haveAccount: 'Already have an account? Sign in',
     noAccount: "Don't have an account? Sign up",
@@ -43,10 +43,8 @@ const T = {
     headline2: 'Rruga juaj.',
     email: 'email@kompania.al',
     password: 'Fjalëkalimi',
-    name: 'Emri i plotë',
     company: 'Emri i kompanisë',
     signIn: 'Hyr',
-    createAccount: 'Krijo Llogari',
     or: 'ose',
     haveAccount: 'Keni llogari? Hyni këtu',
     noAccount: 'Nuk keni llogari? Regjistrohuni',
@@ -54,8 +52,13 @@ const T = {
 }
 
 export function LoginPage() {
+  const navigate = useNavigate()
+  const login = useAuthStore((state) => state.login)
+  const persistLang = useAuthStore((state) => state.setLang)
+  const savedLang = useAuthStore((state) => state.lang)
+
   const [role, setRole]       = useState('employee')
-  const [lang, setLang]       = useState('en')
+  const [lang, setLang]       = useState(savedLang ?? 'en')
   const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail]     = useState('')
   const [password, setPass]   = useState('')
@@ -65,6 +68,9 @@ export function LoginPage() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => { setTimeout(() => setVisible(true), 80) }, [])
+  useEffect(() => {
+    persistLang(lang)
+  }, [lang, persistLang])
 
   const t   = T[lang]
   const cur = ROLES.find(r => r.id === role)
@@ -72,7 +78,24 @@ export function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => setLoading(false), 2000)
+
+    const user = {
+      name: name || email.split('@')[0] || 'User',
+      email,
+      company: company || null,
+    }
+
+    window.setTimeout(() => {
+      login({
+        user,
+        role,
+        token: `mock-${role}-${Date.now()}`,
+        lang,
+      })
+
+      setLoading(false)
+      navigate(role === 'employee' ? '/onboarding' : `/${role}`)
+    }, 500)
   }
 
   return (
@@ -139,12 +162,12 @@ export function LoginPage() {
 
         {/* form */}
         <form className="login-form" onSubmit={handleSubmit}>
-          {isSignUp && (
+          {isSignUp && role !== 'employee' && (
             <div className="field-wrap">
               <span className="field-ico">👤</span>
               <input
                 type="text"
-                placeholder={t.name}
+                placeholder="Full name"
                 value={name}
                 onChange={e => setName(e.target.value)}
               />
@@ -190,18 +213,20 @@ export function LoginPage() {
               <span className="spinner" />
             ) : (
               <>
-                <span>{isSignUp ? t.createAccount : t.signIn}</span>
+                <span>{t.signIn}</span>
                 <em className="btn-arrow">→</em>
               </>
             )}
           </button>
         </form>
 
-        <div className="or-divider"><span>{t.or}</span></div>
+        {role !== 'employee' && <div className="or-divider"><span>{t.or}</span></div>}
 
-        <button className="switch-link" onClick={() => setIsSignUp(s => !s)}>
-          {isSignUp ? t.haveAccount : t.noAccount}
-        </button>
+        {role !== 'employee' && (
+          <button className="switch-link" onClick={() => setIsSignUp(s => !s)}>
+            {isSignUp ? t.haveAccount : t.noAccount}
+          </button>
+        )}
 
         {/* benefit category pills */}
         <div className="cat-pills">
