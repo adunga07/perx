@@ -4,6 +4,7 @@ import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
 import { MobileNav } from './MobileNav'
 import { CartDrawer } from '../cart/CartDrawer'
+import { ChatBot } from '../chat/ChatBot'
 import { useAuthStore } from '../../store/authStore'
 import { useEffect } from 'react'
 
@@ -39,6 +40,7 @@ export function AppShell() {
 
       <MobileNav />
       <CartDrawer />
+      <ChatBot />
     </div>
   )
 }
