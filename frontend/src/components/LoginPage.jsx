@@ -1,6 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Component } from 'react'
 import { Scene3D } from './Scene3D'
 import './LoginPage.css'
+
+class SceneErrorBoundary extends Component {
+  constructor(props) { super(props); this.state = { failed: false } }
+  static getDerivedStateFromError() { return { failed: true } }
+  componentDidCatch(err) { console.error('[Scene3D error]', err) }
+  render() { return this.state.failed ? null : this.props.children }
+}
 
 const ROLES = [
   { id: 'employee', icon: '👤', en: 'Employee', sq: 'Punonjës',   desc_en: 'Browse & redeem your benefits',       desc_sq: 'Shfleto dhe merr përfitimet',  color: '#7c3aed' },
@@ -70,7 +77,7 @@ export function LoginPage() {
 
   return (
     <div className="login-root">
-      <Scene3D />
+      <SceneErrorBoundary><Scene3D /></SceneErrorBoundary>
       <div className="bg-glow" />
 
       <div

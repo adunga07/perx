@@ -1,8 +1,15 @@
-import { useMemo, useRef, Suspense } from "react";
+import { useMemo, useRef, Suspense, Component } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Float, Stars, useGLTF } from "@react-three/drei";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import * as THREE from "three";
+
+class ModelBoundary extends Component {
+  constructor(props) { super(props); this.state = { failed: false } }
+  static getDerivedStateFromError() { return { failed: true } }
+  componentDidCatch(err) { console.error('[Model load error]', err) }
+  render() { return this.state.failed ? null : this.props.children }
+}
 
 function AnimatedObject({ position, rotation, speed = 1, floatSpeed = 0.6, floatIntensity = 1.6, children }) {
   const ref = useRef();
@@ -130,18 +137,18 @@ function SceneInner() {
       <Stars radius={90} depth={60} count={6000} factor={4} saturation={0.3} fade speed={0.4} />
       <Particles count={220} />
 
-      <Suspense fallback={null}>
+      <ModelBoundary><Suspense fallback={null}>
         <DiceModel position={[-6.8, 2.8, -2.0]} rotation={[0.15, -0.3, 0.12]} />
-      </Suspense>
-      <Suspense fallback={null}>
+      </Suspense></ModelBoundary>
+      <ModelBoundary><Suspense fallback={null}>
         <BarbellModel position={[7.0, 3.5, -2.5]} rotation={[0.08, -0.4, 0.18]} />
-      </Suspense>
-      <Suspense fallback={null}>
+      </Suspense></ModelBoundary>
+      <ModelBoundary><Suspense fallback={null}>
         <PingPongModel position={[-7.2, -3.2, -3.0]} rotation={[-0.12, 0.35, 0.2]} />
-      </Suspense>
-      <Suspense fallback={null}>
+      </Suspense></ModelBoundary>
+      <ModelBoundary><Suspense fallback={null}>
         <HealthBoxModel position={[6.5, -2.6, -3.2]} rotation={[0.12, 0.26, 0.06]} />
-      </Suspense>
+      </Suspense></ModelBoundary>
     </>
   );
 }
