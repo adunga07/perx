@@ -1,2 +1,45 @@
-﻿/* TODO: sidebar/topbar/content grid layout */
+﻿/* AppShell layout */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #07030a 0%, #03010a 100%);
+  color: #fff;
+}
+
+.sidebar {
+  width: 92px;
+  background: rgba(255,255,255,0.02);
+  border-right: 1px solid rgba(255,255,255,0.03);
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  background: linear-gradient(90deg, rgba(255,255,255,0.01), transparent);
+}
+
+.app-content {
+  padding: 24px;
+  flex: 1;
+  overflow: auto;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .mobile-nav { display: block; position: fixed; bottom: 12px; left: 12px; right: 12px; }
+}
+/* TODO: sidebar/topbar/content grid layout */
 
