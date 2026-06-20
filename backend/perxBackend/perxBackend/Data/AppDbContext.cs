@@ -7,23 +7,23 @@ namespace perxBackend.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        DbSet<User> Users { get; set; }
-        DbSet<Business> Businesses { get; set; }
-        DbSet<Employee> Employees { get; set; }
-        DbSet<EmployeePerx> EmployeePerxes { get; set; }
-        DbSet<Employeer> Employeers { get; set; }
-        DbSet<EmployeerBusiness> EmployeerBusinesses { get; set; }
-        DbSet<Item> Items { get; set; }
-        DbSet<ItemPerx> ItemPerxes { get; set; }
-        DbSet<Perx> Perxes {  get; set; }
-        DbSet<Tag> Tags { get; set; }
-        DbSet<TagItem> TagsItems { get; set; }
-        DbSet<TagBusiness> TagBusinesses { get; set; }
-        DbSet<TransactionHistory> Transactions { get; set; }
-        DbSet<EmployeeTag> EmployeeTags { get; set; }
-        DbSet<Category> Categories { get; set; }
-        DbSet<TagCategory> TagCategorys { get; set; }
-        DbSet<CategoryBusiness> CategoryBusinesses { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Business> Businesses { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeePerx> EmployeePerxes { get; set; }
+        public DbSet<Employeer> Employeers { get; set; }
+        public DbSet<EmployeerBusiness> EmployeerBusinesses { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemPerx> ItemPerxes { get; set; }
+        public DbSet<Perx> Perxes {  get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<TagItem> TagsItems { get; set; }
+        public DbSet<TagBusiness> TagBusinesses { get; set; }
+        public DbSet<TransactionHistory> Transactions { get; set; }
+        public DbSet<EmployeeTag> EmployeeTags { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<TagCategory> TagCategorys { get; set; }
+        public DbSet<CategoryBusiness> CategoryBusinesses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
