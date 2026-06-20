@@ -1,5 +1,10 @@
-﻿// TODO: small pill label (e.g. '20% OFF')
-export function Badge({ children, color }) {
-  return <span className='badge'>{children}</span>
-}
+import './ui.css'
 
+export function Badge({ children, color = 'purple', dot = false, large = false }) {
+  return (
+    <span className={`badge badge-${color} ${large ? 'badge-discount' : ''}`}>
+      {dot && <span className="badge-dot" />}
+      {children}
+    </span>
+  )
+}
