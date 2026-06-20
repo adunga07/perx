@@ -1,0 +1,341 @@
+.perk-detail-page {
+  min-height: 100vh;
+  padding: 32px 20px 72px;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(34, 197, 94, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(59, 130, 246, 0.16),
+      transparent 24%
+    ),
+    linear-gradient(180deg, #050816 0%, #0b1020 100%);
+  color: #f8fafc;
+}
+
+.perk-detail-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.perk-detail-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.perk-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(248, 250, 252, 0.84);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.perk-detail-pill,
+.perk-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.perk-detail-pill {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.perk-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 22px;
+  align-items: center;
+  padding: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 32px;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 28px 80px rgba(2, 6, 23, 0.42);
+}
+
+.perk-hero-copy h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.perk-eyebrow {
+  margin: 0 0 12px;
+  color: #93c5fd;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.perk-summary {
+  max-width: 620px;
+  margin: 16px 0 0;
+  color: rgba(226, 232, 240, 0.76);
+  line-height: 1.7;
+}
+
+.perk-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.perk-chip {
+  padding: 8px 12px;
+  background: rgba(124, 58, 237, 0.16);
+  color: #ddd6fe;
+  border: 1px solid rgba(196, 181, 253, 0.16);
+}
+
+.perk-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.perk-stats div,
+.perk-info-card {
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(2, 6, 23, 0.34);
+  backdrop-filter: blur(14px);
+}
+
+.perk-stats div {
+  padding: 16px;
+  border-radius: 22px;
+}
+
+.perk-stats span,
+.perk-fact-list span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(226, 232, 240, 0.62);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.perk-stats strong {
+  font-size: 1.45rem;
+}
+
+.perk-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.perk-primary-action,
+.perk-secondary-action {
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.perk-primary-action {
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  color: #ffffff;
+}
+
+.perk-secondary-action {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.perk-hero-visual {
+  min-width: 0;
+}
+
+.perk-image-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  aspect-ratio: 4 / 4.5;
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.22),
+    rgba(6, 182, 212, 0.2)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.perk-image-frame img,
+.perk-image-fallback {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.perk-image-fallback {
+  display: grid;
+  place-items: center;
+  color: rgba(248, 250, 252, 0.7);
+  font-size: 1rem;
+}
+
+.perk-image-overlay {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.perk-image-overlay span {
+  color: rgba(226, 232, 240, 0.76);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.perk-image-overlay strong {
+  font-size: 1.35rem;
+}
+
+.perk-detail-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.perk-info-card {
+  padding: 22px;
+  border-radius: 26px;
+}
+
+.perk-info-card h2,
+.perk-section-heading h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.perk-info-card p {
+  margin: 14px 0 0;
+  color: rgba(226, 232, 240, 0.76);
+  line-height: 1.7;
+}
+
+.perk-fact-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.perk-fact-list div {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.perk-fact-list strong {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.perk-benefit-list,
+.perk-step-list {
+  margin: 14px 0 0;
+  padding-left: 18px;
+  color: rgba(226, 232, 240, 0.82);
+  line-height: 1.8;
+}
+
+.perk-benefit-list li + li,
+.perk-step-list li + li {
+  margin-top: 10px;
+}
+
+.perk-related-section {
+  margin-top: 26px;
+}
+
+.perk-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.perk-section-heading a {
+  color: #93c5fd;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.perk-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1024px) {
+  .perk-hero,
+  .perk-detail-grid,
+  .perk-related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .perk-detail-grid {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .perk-detail-page {
+    padding: 22px 14px 64px;
+  }
+
+  .perk-detail-nav,
+  .perk-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .perk-hero,
+  .perk-info-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .perk-stats,
+  .perk-fact-list {
+    grid-template-columns: 1fr;
+  }
+
+  .perk-image-frame {
+    aspect-ratio: 1 / 1.05;
+  }
+}
