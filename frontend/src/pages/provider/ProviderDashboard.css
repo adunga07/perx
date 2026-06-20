@@ -1,0 +1,322 @@
+/* ═══════════════════════════════════════════
+   Provider Dashboard
+   ═══════════════════════════════════════════ */
+
+.pd-root {
+  padding: 0 0 60px;
+  color: #fff;
+  min-height: 100%;
+}
+
+/* ── Header ── */
+.pd-header {
+  padding: 0 24px 28px;
+}
+
+.pd-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: rgba(245,158,11,0.75);
+  margin: 0 0 6px;
+}
+
+.pd-title {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  margin: 0 0 4px;
+  background: linear-gradient(110deg, #fff 0%, #fcd34d 55%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.pd-subtitle {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.4);
+  margin: 0;
+}
+
+/* ── Stats ── */
+.pd-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  padding: 0 24px 24px;
+}
+
+.pd-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pd-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pd-stat-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.2);
+}
+
+.pd-stat-delta {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.pd-stat-delta.up   { background: rgba(16,185,129,0.12); color: #6ee7b7; }
+.pd-stat-delta.down { background: rgba(239,68,68,0.12);  color: #fca5a5; }
+
+.pd-stat-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.8px;
+  line-height: 1;
+}
+
+.pd-stat-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+}
+
+/* ── Charts row ── */
+.pd-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+  padding: 0 24px 20px;
+}
+
+.pd-chart-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pd-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.pd-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin: 0;
+}
+
+.pd-chart-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.pd-chart-total {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.pd-chart-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+}
+
+/* Sparkline */
+.pd-sparkline-wrap {
+  position: relative;
+  height: 100px;
+}
+
+.pd-sparkline {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pd-chart-labels {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 6px;
+}
+
+.pd-chart-label {
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.28);
+  font-weight: 500;
+}
+
+/* ── Top Perks ── */
+.pd-top-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pd-top-perk-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pd-top-rank {
+  width: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.pd-top-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pd-top-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pd-top-bar-track {
+  height: 4px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pd-top-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #fcd34d);
+  border-radius: 999px;
+}
+
+.pd-top-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* ── Transactions ── */
+.pd-table-section {
+  padding: 0 24px;
+}
+
+.pd-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.pd-table-link {
+  font-size: 12px;
+  color: rgba(245,158,11,0.7);
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+}
+.pd-table-link:hover { color: #fcd34d; }
+
+.pd-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pd-table th {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.28);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 0 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.pd-table td {
+  padding: 12px;
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.7);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+}
+
+.pd-table tr:last-child td { border-bottom: none; }
+
+.pd-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.pd-txn-id {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  font-family: monospace;
+  letter-spacing: 0.3px;
+}
+
+.pd-employee-cell {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.pd-amount {
+  font-weight: 700;
+  color: #fcd34d;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Quick Actions ── */
+.pd-actions {
+  display: flex;
+  gap: 10px;
+  padding: 20px 24px 0;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .pd-stats       { grid-template-columns: repeat(2, 1fr); }
+  .pd-charts-row  { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .pd-stats { grid-template-columns: repeat(2, 1fr); padding: 0 14px 20px; }
+  .pd-header, .pd-charts-row, .pd-table-section, .pd-actions { padding-left: 14px; padding-right: 14px; }
+  .pd-table th:nth-child(1),
+  .pd-table td:nth-child(1) { display: none; }
+}
