@@ -1,4 +1,4 @@
-﻿// TODO: core display unit for a PERX — used in 3 portals
+﻿import { useCartStore } from "../../store/cartStore";
 import "./PerkCard.css";
 
 export function PerkCard({
@@ -10,6 +10,8 @@ export function PerkCard({
   onApprove,
   onReject,
 }) {
+  const addItem    = useCartStore((s) => s.addItem);
+  const openDrawer = useCartStore((s) => s.openDrawer);
   const activePerk = perk ?? {
     title: "Perk preview",
     image: "",
@@ -85,7 +87,8 @@ export function PerkCard({
           className="perk-cart-btn"
           onClick={(e) => {
             e.stopPropagation();
-            console.log("Add to cart:", activePerk?.id);
+            addItem(activePerk);
+            openDrawer();
           }}
         >
           Add to Cart

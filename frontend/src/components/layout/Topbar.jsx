@@ -1,5 +1,6 @@
 import { Avatar } from "../ui/Avatar";
 import { useAuthStore } from "../../store/authStore";
+import { useCartStore, cartCount } from "../../store/cartStore";
 
 const IconBell = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -8,10 +9,22 @@ const IconBell = () => (
   </svg>
 );
 
+const IconCart = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="9" cy="21" r="1"/>
+    <circle cx="20" cy="21" r="1"/>
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+  </svg>
+);
+
 export function Topbar() {
   const user = useAuthStore((state) => state.user);
   const role = useAuthStore((state) => state.role);
   const lang = useAuthStore((state) => state.lang);
+
+  const items      = useCartStore((s) => s.items);
+  const openDrawer = useCartStore((s) => s.openDrawer);
+  const count      = cartCount(items);
 
   return (
     <header className="topbar">
@@ -28,6 +41,19 @@ export function Topbar() {
         <button className="topbar-icon-btn" aria-label="Notifications">
           <IconBell />
         </button>
+
+        {role === "employee" && (
+          <button
+            className="topbar-icon-btn topbar-cart-btn"
+            aria-label="Cart"
+            onClick={openDrawer}
+          >
+            <IconCart />
+            {count > 0 && (
+              <span className="topbar-cart-badge">{count}</span>
+            )}
+          </button>
+        )}
 
         <div className="topbar-divider" aria-hidden="true" />
 

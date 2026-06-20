@@ -2,6 +2,7 @@ import { useState, useEffect, Component } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Scene3D } from './Scene3D'
 import { useAuthStore } from '../store/authStore'
+import { useEmployeeStore } from '../store/employeeStore'
 import './LoginPage.css'
 
 class SceneErrorBoundary extends Component {
@@ -66,6 +67,7 @@ export function LoginPage() {
   const [company, setCompany] = useState('')
   const [loading, setLoading] = useState(false)
   const [visible, setVisible] = useState(false)
+  const [error, setError]     = useState('')
 
   useEffect(() => { setTimeout(() => setVisible(true), 80) }, [])
   useEffect(() => {
@@ -77,24 +79,45 @@ export function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setError('')
     setLoading(true)
 
-    const user = {
-      name: name || email.split('@')[0] || 'User',
-      email,
-      company: company || null,
-    }
-
     window.setTimeout(() => {
-      login({
-        user,
-        role,
-        token: `mock-${role}-${Date.now()}`,
-        lang,
-      })
+      if (role === 'employee') {
+        const employees = useEmployeeStore.getState().employees
+        const match = employees.find((emp) => emp.email === email)
 
+        if (!match) {
+          setError('No employee account found with this email.')
+          setLoading(false)
+          return
+        }
+        if (match.password !== password) {
+          setError('Incorrect password.')
+          setLoading(false)
+          return
+        }
+
+        login({
+          user: { name: match.name, email: match.email, department: match.department },
+          role: 'employee',
+          token: `mock-employee-${Date.now()}`,
+          lang,
+        })
+        setLoading(false)
+        navigate('/onboarding')
+        return
+      }
+
+      // employer / provider — no credential check (mock)
+      const user = {
+        name: name || email.split('@')[0] || 'User',
+        email,
+        company: company || null,
+      }
+      login({ user, role, token: `mock-${role}-${Date.now()}`, lang })
       setLoading(false)
-      navigate(role === 'employee' ? '/onboarding' : `/${role}`)
+      navigate(`/${role}`)
     }, 500)
   }
 
@@ -207,6 +230,12 @@ export function LoginPage() {
               required
             />
           </div>
+
+          {error && (
+            <p style={{ margin: '0 0 4px', color: '#fca5a5', fontSize: '0.84rem', textAlign: 'center' }}>
+              {error}
+            </p>
+          )}
 
           <button type="submit" className={`submit-btn ${loading ? 'loading' : ''}`}>
             {loading ? (

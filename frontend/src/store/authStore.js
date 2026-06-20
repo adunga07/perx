@@ -22,6 +22,8 @@ export const useAuthStore = create(
 					lang: lang ?? 'en',
 					onboardingCompleted: role !== 'employee',
 				}),
+			updateProfile: (changes) =>
+				set((state) => ({ user: { ...state.user, ...changes } })),
 			logout: () => set({ ...initialState }),
 			setLang: (lang) => set({ lang }),
 			completeOnboarding: (preferences = []) =>

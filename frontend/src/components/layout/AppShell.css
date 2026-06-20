@@ -263,6 +263,30 @@
   white-space: nowrap;
 }
 
+/* ─── Cart icon in topbar ───────────────────────── */
+.topbar-cart-btn {
+  position: relative;
+}
+
+.topbar-cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  pointer-events: none;
+}
+
 /* ─── App content ───────────────────────────────── */
 .app-content {
   padding: 24px;

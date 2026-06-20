@@ -1,6 +1,7 @@
 ﻿import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { PerkCard } from "../../components/shared/PerkCard";
 import { perks } from "../../mock/perks";
+import { useCartStore } from "../../store/cartStore";
 import "./PerkDetail.css";
 
 function formatPrice(amount) {
@@ -14,6 +15,8 @@ function formatPrice(amount) {
 export function PerkDetail() {
   const { perkId } = useParams();
   const navigate = useNavigate();
+  const addItem    = useCartStore((s) => s.addItem);
+  const openDrawer = useCartStore((s) => s.openDrawer);
   const perk = perks.find((item) => item.id === perkId);
 
   if (!perk) {
@@ -74,9 +77,9 @@ export function PerkDetail() {
             <div className="perk-actions-row">
               <button
                 className="perk-primary-action"
-                onClick={() => navigate("/employee/marketplace")}
+                onClick={() => { addItem(perk); openDrawer(); }}
               >
-                Add to request
+                Add to cart
               </button>
               <button
                 className="perk-secondary-action"

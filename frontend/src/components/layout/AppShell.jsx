@@ -3,6 +3,7 @@ import './AppShell.css'
 import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
 import { MobileNav } from './MobileNav'
+import { CartDrawer } from '../cart/CartDrawer'
 import { useAuthStore } from '../../store/authStore'
 import { useEffect } from 'react'
 
@@ -37,6 +38,7 @@ export function AppShell() {
       </div>
 
       <MobileNav />
+      <CartDrawer />
     </div>
   )
 }
