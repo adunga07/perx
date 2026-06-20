@@ -22,6 +22,8 @@ namespace perxBackend.Data
         DbSet<TransactionHistory> Transactions { get; set; }
         DbSet<EmployeeTag> EmployeeTags { get; set; }
         DbSet<Category> Categories { get; set; }
+        DbSet<TagCategory> TagCategorys { get; set; }
+        DbSet<CategoryBusiness> CategoryBusinesses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,7 +53,8 @@ namespace perxBackend.Data
             modelBuilder.Entity<Employeer>()
                 .HasMany(e => e.EmployeeList)
                 .WithOne(e => e.Employeer)
-                .HasForeignKey(e => e.EmployeerId);
+                .HasForeignKey(e => e.EmployeerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Employeer>()
             .HasMany(e => e.BusinessList)
@@ -82,10 +85,25 @@ namespace perxBackend.Data
                 .HasOne<Employeer>()
                 .WithMany(e => e.Transactions)
                 .HasForeignKey(e => e.EmployeerId);
+            modelBuilder.Entity<Business>()
+                .HasMany(e => e.CategoryList)
+                .WithMany(e => e.Businesses)
+                .UsingEntity<CategoryBusiness>(
+                    r => r.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId),
+                    k => k.HasOne<Business>().WithMany().HasForeignKey(e => e.BusinessId));
             modelBuilder.Entity<Tag>()
-                .HasOne<Category>()
+                .HasMany(e => e.Categories)
                 .WithMany(e => e.Tags)
-                .HasForeignKey(e => e.CategoryId);
+                .UsingEntity<TagCategory>(
+                    r => r.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId),
+                    k => k.HasOne<Tag>().WithMany().HasForeignKey(e => e.TagId));
+            modelBuilder.Entity<Perx>()
+                .HasOne<Category>()
+                .WithMany(e => e.Perxs)
+                .HasForeignKey(e => e.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
 
         }
     }
