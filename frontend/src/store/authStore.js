@@ -6,6 +6,8 @@ const initialState = {
 	role: null,
 	token: null,
 	lang: 'en',
+	onboardingCompleted: false,
+	preferences: [],
 }
 
 export const useAuthStore = create(
@@ -18,9 +20,15 @@ export const useAuthStore = create(
 					role,
 					token,
 					lang: lang ?? 'en',
+					onboardingCompleted: role !== 'employee',
 				}),
 			logout: () => set({ ...initialState }),
 			setLang: (lang) => set({ lang }),
+			completeOnboarding: (preferences = []) =>
+				set({
+					onboardingCompleted: true,
+					preferences,
+				}),
 		}),
 		{
 			name: 'perx-auth',
@@ -29,6 +37,8 @@ export const useAuthStore = create(
 				role: state.role,
 				token: state.token,
 				lang: state.lang,
+				onboardingCompleted: state.onboardingCompleted,
+				preferences: state.preferences,
 			}),
 		},
 	),

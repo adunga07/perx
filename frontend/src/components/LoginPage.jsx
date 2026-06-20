@@ -25,10 +25,8 @@ const T = {
     headline2: 'Your way.',
     email: 'your@company.com',
     password: 'Password',
-    name: 'Full name',
     company: 'Company name',
     signIn: 'Sign In',
-    createAccount: 'Create Account',
     or: 'or',
     haveAccount: 'Already have an account? Sign in',
     noAccount: "Don't have an account? Sign up",
@@ -38,10 +36,8 @@ const T = {
     headline2: 'Rruga juaj.',
     email: 'email@kompania.al',
     password: 'Fjalëkalimi',
-    name: 'Emri i plotë',
     company: 'Emri i kompanisë',
     signIn: 'Hyr',
-    createAccount: 'Krijo Llogari',
     or: 'ose',
     haveAccount: 'Keni llogari? Hyni këtu',
     noAccount: 'Nuk keni llogari? Regjistrohuni',
@@ -91,7 +87,7 @@ export function LoginPage() {
       })
 
       setLoading(false)
-      navigate(isSignUp ? '/onboarding' : `/${role}`)
+      navigate(role === 'employee' ? '/onboarding' : `/${role}`)
     }, 500)
   }
 
@@ -159,12 +155,12 @@ export function LoginPage() {
 
         {/* form */}
         <form className="login-form" onSubmit={handleSubmit}>
-          {isSignUp && (
+          {isSignUp && role !== 'employee' && (
             <div className="field-wrap">
               <span className="field-ico">👤</span>
               <input
                 type="text"
-                placeholder={t.name}
+                placeholder="Full name"
                 value={name}
                 onChange={e => setName(e.target.value)}
               />
@@ -210,18 +206,20 @@ export function LoginPage() {
               <span className="spinner" />
             ) : (
               <>
-                <span>{isSignUp ? t.createAccount : t.signIn}</span>
+                <span>{t.signIn}</span>
                 <em className="btn-arrow">→</em>
               </>
             )}
           </button>
         </form>
 
-        <div className="or-divider"><span>{t.or}</span></div>
+        {role !== 'employee' && <div className="or-divider"><span>{t.or}</span></div>}
 
-        <button className="switch-link" onClick={() => setIsSignUp(s => !s)}>
-          {isSignUp ? t.haveAccount : t.noAccount}
-        </button>
+        {role !== 'employee' && (
+          <button className="switch-link" onClick={() => setIsSignUp(s => !s)}>
+            {isSignUp ? t.haveAccount : t.noAccount}
+          </button>
+        )}
 
         {/* benefit category pills */}
         <div className="cat-pills">
