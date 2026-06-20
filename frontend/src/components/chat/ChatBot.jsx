@@ -4,9 +4,10 @@ import { useAuthStore } from "../../store/authStore";
 import { perks } from "../../mock/perks";
 import "./ChatBot.css";
 
-const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const MODEL = "llama3-8b-8192";
-const LS_KEY = "perx-groq-key";
+const RAPIDAPI_URL = "https://open-ai21.p.rapidapi.com/conversationllama";
+const RAPIDAPI_HOST = "open-ai21.p.rapidapi.com";
+const RAPIDAPI_KEY = import.meta.env.VITE_RAPIDAPI_KEY;
+const LS_KEY = "perx-rapidapi-key";
 
 function buildSystemPrompt(user, preferences) {
   const activePerks = perks
@@ -44,9 +45,8 @@ export function ChatBot() {
   const preferences = useAuthStore((s) => s.preferences);
 
   const [open, setOpen] = useState(false);
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem(LS_KEY) || "");
-  const [keyDraft, setKeyDraft] = useState("");
-  const [setupDone, setSetupDone] = useState(() => !!localStorage.getItem(LS_KEY));
+  const [apiKey] = useState(RAPIDAPI_KEY);
+  const [setupDone] = useState(true);
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -64,18 +64,6 @@ export function ChatBot() {
 
   if (role !== "employee") return null;
 
-  function saveKey() {
-    const k = keyDraft.trim();
-    if (!k.startsWith("gsk_")) {
-      setError("Groq API keys start with gsk_");
-      return;
-    }
-    localStorage.setItem(LS_KEY, k);
-    setApiKey(k);
-    setSetupDone(true);
-    setError("");
-  }
-
   async function sendMessage() {
     const text = input.trim();
     if (!text || loading) return;
@@ -87,43 +75,42 @@ export function ChatBot() {
     setMessages(updated);
     setLoading(true);
 
+    const systemMsg = { role: "system", content: buildSystemPrompt(user, preferences) };
+
     try {
-      const res = await fetch(GROQ_URL, {
+      const res = await fetch(RAPIDAPI_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          "x-rapidapi-key": apiKey,
+          "x-rapidapi-host": RAPIDAPI_HOST,
         },
         body: JSON.stringify({
-          model: MODEL,
-          messages: [
-            { role: "system", content: buildSystemPrompt(user, preferences) },
-            ...updated,
-          ],
-          temperature: 0.7,
-          max_tokens: 512,
+          messages: [systemMsg, ...updated],
+          web_access: false,
         }),
       });
 
+      const body = await res.json().catch(() => ({}));
+      console.log("[Perxa] API response:", res.status, body);
+
       if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        if (res.status === 401) {
-          setError("Invalid API key. Check your Groq key and try again.");
-          localStorage.removeItem(LS_KEY);
-          setSetupDone(false);
-          setApiKey("");
-        } else {
-          setError(body?.error?.message || `Error ${res.status}`);
-        }
+        const msg = body?.message || body?.error?.message || body?.error || `Error ${res.status}`;
+        // Only clear the key for hard auth failures with the expected RapidAPI error string
+        setError(typeof msg === "string" ? msg : JSON.stringify(msg));
         setLoading(false);
         return;
       }
 
-      const data = await res.json();
-      const reply = data.choices?.[0]?.message?.content || "Sorry, I couldn't get a response.";
+      // API returns { result: "..." } or OpenAI-style { choices: [...] }
+      const reply =
+        body?.result ||
+        body?.choices?.[0]?.message?.content ||
+        "Sorry, I couldn't get a response.";
       setMessages((m) => [...m, { role: "assistant", content: reply }]);
     } catch (err) {
-      setError("Network error. Check your connection.");
+      console.error("[Perxa] fetch error:", err);
+      setError(`Network error: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -151,68 +138,41 @@ export function ChatBot() {
         </button>
       </div>
 
-      {!setupDone ? (
-        <div className="chat-setup">
-          <div className="chat-setup-icon">🔑</div>
-          <p className="chat-setup-title">Connect to AI</p>
-          <p className="chat-setup-desc">
-            Perxa uses the <strong>Groq API</strong> (free). Get your key at{" "}
-            <a href="https://console.groq.com/keys" target="_blank" rel="noreferrer">
-              console.groq.com
-            </a>
-          </p>
-          <input
-            className="chat-key-input"
-            type="password"
-            placeholder="gsk_..."
-            value={keyDraft}
-            onChange={(e) => { setKeyDraft(e.target.value); setError(""); }}
-            onKeyDown={(e) => e.key === "Enter" && saveKey()}
+        <div className="chat-messages">
+          {messages.map((m, i) => (
+            <div key={i} className={`chat-bubble ${m.role}`}>
+              <p>{m.content}</p>
+            </div>
+          ))}
+          {loading && (
+            <div className="chat-bubble assistant">
+              <div className="chat-typing">
+                <span /><span /><span />
+              </div>
+            </div>
+          )}
+          {error && <p className="chat-inline-error">{error}</p>}
+          <div ref={bottomRef} />
+        </div>
+
+        <div className="chat-input-row">
+          <textarea
+            className="chat-textarea"
+            rows={1}
+            placeholder="Ask about perks…"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKey}
           />
-          {error && <p className="chat-error">{error}</p>}
-          <button className="chat-connect-btn" onClick={saveKey}>
-            Connect
+          <button
+            className="chat-send-btn"
+            onClick={sendMessage}
+            disabled={!input.trim() || loading}
+            aria-label="Send"
+          >
+            ↑
           </button>
         </div>
-      ) : (
-        <>
-          <div className="chat-messages">
-            {messages.map((m, i) => (
-              <div key={i} className={`chat-bubble ${m.role}`}>
-                <p>{m.content}</p>
-              </div>
-            ))}
-            {loading && (
-              <div className="chat-bubble assistant">
-                <div className="chat-typing">
-                  <span /><span /><span />
-                </div>
-              </div>
-            )}
-            {error && <p className="chat-inline-error">{error}</p>}
-            <div ref={bottomRef} />
-          </div>
-
-          <div className="chat-input-row">
-            <textarea
-              className="chat-textarea"
-              rows={1}
-              placeholder="Ask about perks…"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKey}
-            />
-            <button
-              className="chat-send-btn"
-              onClick={sendMessage}
-              disabled={!input.trim() || loading}
-              aria-label="Send"
-            >
-              ↑
-            </button>
-          </div>
-        </>
-      )}
     </div>
   );
 
