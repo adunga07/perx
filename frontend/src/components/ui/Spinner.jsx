@@ -1,5 +1,12 @@
-﻿// TODO: reuses .spinner from LoginPage.css
-export function Spinner({ size = 20 }) {
-  return <span className='spinner' style={{ width: size, height: size }} />
-}
+import './ui.css'
 
+export function Spinner({ size = 20, color = 'purple' }) {
+  const borderWidth = Math.max(2, Math.round(size / 9))
+  return (
+    <span
+      className={`spinner spinner-${color}`}
+      style={{ width: size, height: size, borderWidth }}
+      aria-label="Loading"
+    />
+  )
+}
