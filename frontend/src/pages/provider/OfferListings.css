@@ -1,0 +1,342 @@
+/* ═══════════════════════════════════════════
+   Offer Listings
+   ═══════════════════════════════════════════ */
+
+.ol-root {
+  padding: 0 0 60px;
+  color: #fff;
+  min-height: 100%;
+}
+
+/* ── Header ── */
+.ol-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px 24px;
+  flex-wrap: wrap;
+}
+
+.ol-header-text { flex: 1; }
+
+.ol-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: rgba(245,158,11,0.75);
+  margin: 0 0 6px;
+}
+
+.ol-title {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(110deg, #fff 0%, #fcd34d 55%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+/* ── Toolbar ── */
+.ol-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px 20px;
+  flex-wrap: wrap;
+}
+
+.ol-search {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px;
+  padding: 0 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ol-search:focus-within {
+  border-color: rgba(245,158,11,0.45);
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.08);
+}
+
+.ol-search-icon { color: rgba(255,255,255,0.3); font-size: 14px; }
+
+.ol-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 13.5px;
+  padding: 11px 0;
+  outline: none;
+}
+.ol-search input::placeholder { color: rgba(255,255,255,0.25); }
+
+.ol-filters {
+  display: flex;
+  gap: 6px;
+}
+
+.ol-filter-pill {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.45);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ol-filter-pill:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); }
+.ol-filter-pill.active {
+  background: rgba(245,158,11,0.15);
+  border-color: rgba(245,158,11,0.4);
+  color: #fcd34d;
+}
+
+/* ── Grid ── */
+.ol-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 0 24px;
+}
+
+/* ── Offer Card ── */
+.ol-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: default;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.ol-card:hover { transform: translateY(-3px); }
+
+.ol-card-img {
+  position: relative;
+  height: 160px;
+  background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(6,182,212,0.15));
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 14px 14px 0 0;
+}
+
+.ol-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ol-card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  opacity: 0.4;
+}
+
+.ol-discount-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: linear-gradient(130deg, #f59e0b, #fcd34d);
+  color: #1a0a00;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  box-shadow: 0 2px 10px rgba(245,158,11,0.4);
+}
+
+.ol-status-dot {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(4,1,15,0.75);
+  backdrop-filter: blur(8px);
+  font-size: 11px;
+  font-weight: 700;
+}
+.ol-status-dot.active  { color: #6ee7b7; }
+.ol-status-dot.inactive { color: rgba(255,255,255,0.35); }
+
+.ol-status-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ol-status-dot.active::before   { background: #10b981; box-shadow: 0 0 5px rgba(16,185,129,0.6); }
+.ol-status-dot.inactive::before { background: rgba(255,255,255,0.2); }
+
+.ol-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px 16px;
+  flex: 1;
+}
+
+.ol-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.ol-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ol-card-tag {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  color: rgba(245,158,11,0.8);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ol-card-pricing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ol-old-price {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.35);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.ol-new-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: #fcd34d;
+  font-variant-numeric: tabular-nums;
+}
+
+.ol-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.ol-used {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ── Toggle switch ── */
+.ol-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.ol-toggle-track {
+  width: 36px;
+  height: 20px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 999px;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.22s, border-color 0.22s;
+}
+.ol-toggle-track::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  top: 2px; left: 2px;
+  transition: transform 0.22s, background 0.22s;
+}
+.ol-toggle input:checked + .ol-toggle-track {
+  background: rgba(245,158,11,0.25);
+  border-color: rgba(245,158,11,0.5);
+}
+.ol-toggle input:checked + .ol-toggle-track::after {
+  transform: translateX(16px);
+  background: #fcd34d;
+}
+.ol-toggle input { display: none; }
+
+.ol-toggle-label {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.35);
+  font-weight: 600;
+  transition: color 0.2s;
+  user-select: none;
+}
+.ol-toggle input:checked ~ .ol-toggle-label { color: #fcd34d; }
+
+/* ── Card actions ── */
+.ol-card-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+/* ── Delete modal ── */
+.ol-delete-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.ol-delete-icon { font-size: 40px; }
+
+.ol-delete-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.ol-delete-name {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── Empty state wrapper ── */
+.ol-empty {
+  padding: 0 24px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .ol-header, .ol-toolbar, .ol-grid, .ol-empty { padding-left: 14px; padding-right: 14px; }
+  .ol-grid { grid-template-columns: 1fr; }
+}
