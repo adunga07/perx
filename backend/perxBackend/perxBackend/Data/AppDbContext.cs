@@ -21,6 +21,8 @@ namespace perxBackend.Data
         DbSet<TagBusiness> TagBusinesses { get; set; }
         DbSet<TransactionHistory> Transactions { get; set; }
         DbSet<EmployeeTag> EmployeeTags { get; set; }
+        DbSet<Category> Categories { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -80,6 +82,10 @@ namespace perxBackend.Data
                 .HasOne<Employeer>()
                 .WithMany(e => e.Transactions)
                 .HasForeignKey(e => e.EmployeerId);
+            modelBuilder.Entity<Tag>()
+                .HasOne<Category>()
+                .WithMany(e => e.Tags)
+                .HasForeignKey(e => e.CategoryId);
 
         }
     }

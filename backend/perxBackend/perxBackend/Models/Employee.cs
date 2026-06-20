@@ -9,6 +9,8 @@ namespace perxBackend.Models
         public double Balance { get; set; }
         public string BannerImg { get; set; }
         public string ProfilePicture { get; set; }
+        //get ai summany for interests
+        public string Summary {  get; set; }
 
         // Foreign Keys
         public int EmployeerId { get; set; }
