@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("perxBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+45308a5405b524eafa19f4c4eb4a3155ba564389")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8bf91579a5dfb6b41d7accc084ae8ee977e64f9b")]
 [assembly: System.Reflection.AssemblyProductAttribute("perxBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("perxBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
