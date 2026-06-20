@@ -1,6 +1,6 @@
 ﻿namespace perxBackend.Models
 {
-    public class TagsBusiness
+    public class TagBusiness
     {
         public int Id { get; set; }
         public int TagId { get; set; }

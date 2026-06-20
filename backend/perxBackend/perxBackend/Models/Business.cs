@@ -13,5 +13,6 @@
         public string BannerImg { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
+        public ICollection<TransactionHistory> BusinessTransaction { get; set; }
     }
 }

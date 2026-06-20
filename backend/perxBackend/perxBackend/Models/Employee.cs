@@ -16,5 +16,7 @@ namespace perxBackend.Models
         //Navigation Properties
         public ICollection<Tag> TagsList { get; set; }
         public ICollection<Perx> UsedProductList { get; set; }
+
+        public Employeer Employeer { get; set; }
     }
 }

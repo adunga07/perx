@@ -12,5 +12,6 @@ namespace perxBackend.Models
         //public ICollection<Perx> PerksList { get; set; }
         public ICollection<Employee> EmployeeList { get; set; }
         public ICollection<Business> BusinessList { get; set; }
+        public ICollection<TransactionHistory> Transactions { get; set; }
     }
 }
