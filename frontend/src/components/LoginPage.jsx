@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Scene3D } from './Scene3D'
+import { useAuthStore } from '../store/authStore'
 import './LoginPage.css'
 
 const ROLES = [
@@ -47,8 +49,13 @@ const T = {
 }
 
 export function LoginPage() {
+  const navigate = useNavigate()
+  const login = useAuthStore((state) => state.login)
+  const persistLang = useAuthStore((state) => state.setLang)
+  const savedLang = useAuthStore((state) => state.lang)
+
   const [role, setRole]       = useState('employee')
-  const [lang, setLang]       = useState('en')
+  const [lang, setLang]       = useState(savedLang ?? 'en')
   const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail]     = useState('')
   const [password, setPass]   = useState('')
@@ -58,6 +65,9 @@ export function LoginPage() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => { setTimeout(() => setVisible(true), 80) }, [])
+  useEffect(() => {
+    persistLang(lang)
+  }, [lang, persistLang])
 
   const t   = T[lang]
   const cur = ROLES.find(r => r.id === role)
@@ -65,7 +75,24 @@ export function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => setLoading(false), 2000)
+
+    const user = {
+      name: name || email.split('@')[0] || 'User',
+      email,
+      company: company || null,
+    }
+
+    window.setTimeout(() => {
+      login({
+        user,
+        role,
+        token: `mock-${role}-${Date.now()}`,
+        lang,
+      })
+
+      setLoading(false)
+      navigate(isSignUp ? '/onboarding' : `/${role}`)
+    }, 500)
   }
 
   return (
