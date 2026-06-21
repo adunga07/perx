@@ -1,6 +1,8 @@
+import { useState, useRef, useEffect } from "react";
 import { Avatar } from "../ui/Avatar";
 import { useAuthStore } from "../../store/authStore";
 import { useCartStore, cartCount } from "../../store/cartStore";
+import { useTranslationStore, LANGUAGES, getLangDict } from "../../store/translationStore";
 
 const IconBell = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -17,26 +19,88 @@ const IconCart = () => (
   </svg>
 );
 
+const IconGlobe = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="2" y1="12" x2="22" y2="12"/>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+  </svg>
+);
+
 export function Topbar() {
   const user = useAuthStore((state) => state.user);
   const role = useAuthStore((state) => state.role);
-  const lang = useAuthStore((state) => state.lang);
 
   const items      = useCartStore((s) => s.items);
   const openDrawer = useCartStore((s) => s.openDrawer);
   const count      = cartCount(items);
 
+  const lang    = useTranslationStore((s) => s.lang);
+  const setLang = useTranslationStore((s) => s.setLang);
+  const dict    = getLangDict(lang);
+  const t = (key) => dict?.[key] ?? key;
+
+  const [dropOpen, setDropOpen] = useState(false);
+  const dropRef = useRef();
+
+  const currentLang = LANGUAGES.find((l) => l.code === lang) ?? LANGUAGES[0];
+
+  useEffect(() => {
+    function handleClick(e) {
+      if (dropRef.current && !dropRef.current.contains(e.target)) {
+        setDropOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  function selectLang(code) {
+    setLang(code);
+    setDropOpen(false);
+  }
+
+  const portalLabel = t(`${role} portal`);
+
   return (
     <header className="topbar">
       <div className="topbar-left">
         <div className="topbar-heading">
-          <strong>Workspace</strong>
-          <span>{role || "employee"} portal</span>
+          <strong>{t("Workspace") || "Workspace"}</strong>
+          <span>{portalLabel}</span>
         </div>
       </div>
 
       <div className="topbar-actions">
-        <span className="topbar-lang-chip">{lang?.toUpperCase?.() ?? "EN"}</span>
+
+        {/* Language selector */}
+        <div className="lang-selector" ref={dropRef}>
+          <button
+            className="lang-selector-btn"
+            onClick={() => setDropOpen((v) => !v)}
+            aria-label="Select language"
+          >
+            <IconGlobe />
+            <span className="lang-selector-flag">{currentLang.flag}</span>
+            <span className="lang-selector-code">{lang.toUpperCase()}</span>
+          </button>
+
+          {dropOpen && (
+            <div className="lang-dropdown">
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.code}
+                  className={`lang-option ${lang === l.code ? "active" : ""}`}
+                  onClick={() => selectLang(l.code)}
+                >
+                  <span>{l.flag}</span>
+                  <span>{l.label}</span>
+                  {lang === l.code && <span className="lang-check">✓</span>}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <button className="topbar-icon-btn" aria-label="Notifications">
           <IconBell />

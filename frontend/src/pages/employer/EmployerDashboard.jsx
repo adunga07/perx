@@ -4,6 +4,7 @@ import { Avatar } from "../../components/ui/Avatar";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { ProgressBar } from "../../components/ui/ProgressBar";
 import { useAuthStore } from "../../store/authStore";
+import { useT } from "../../hooks/useT";
 import { EMPLOYEES, APPROVALS_SEED, enrichApproval } from "../../mock/employerData";
 import "../../components/shared/PerkCard.css";
 import "../employee/EmployeePages.css";
@@ -17,6 +18,7 @@ function formatDate(iso) {
 }
 
 export function EmployerDashboard() {
+  const t = useT();
   const user = useAuthStore((s) => s.user);
   const [approvals, setApprovals] = useState(() =>
     APPROVALS_SEED.map(enrichApproval),
@@ -33,7 +35,7 @@ export function EmployerDashboard() {
   return (
     <div className="dashboard-feed employer-dashboard">
       <header className="feed-header">
-        <p className="feed-kicker">Company dashboard</p>
+        <p className="feed-kicker">{t("Company dashboard")}</p>
         <h1>Welcome back{user?.name ? `, ${user.name}` : ""}</h1>
         <p className="feed-copy">
           Review pending perk requests, track your team's benefit budget, and
@@ -41,29 +43,29 @@ export function EmployerDashboard() {
         </p>
         <div className="dashboard-actions">
           <Link className="dashboard-primary-action" to="/employer/approvals">
-            Review approvals
+            {t("Review approvals")}
           </Link>
           <Link className="dashboard-secondary-action" to="/employer/employees">
-            Manage employees
+            {t("Manage employees")}
           </Link>
         </div>
       </header>
 
       <section className="dashboard-metrics">
         <div className="dashboard-metric-card">
-          <span>Employees</span>
+          <span>{t("Employees")}</span>
           <strong>{EMPLOYEES.length}</strong>
         </div>
         <div className="dashboard-metric-card">
-          <span>Pending approvals</span>
+          <span>{t("Pending approvals")}</span>
           <strong>{pending.length}</strong>
         </div>
         <div className="dashboard-metric-card">
-          <span>Monthly budget</span>
+          <span>{t("Monthly budget")}</span>
           <strong>€{totalBudget}</strong>
         </div>
         <div className="dashboard-metric-card">
-          <span>Budget used</span>
+          <span>{t("Budget used")}</span>
           <strong>€{usedBudget}</strong>
         </div>
       </section>
@@ -93,8 +95,8 @@ export function EmployerDashboard() {
                 <span className="employer-row-date">{formatDate(a.requestedAt)}</span>
               </div>
               <div className="employer-row-right">
-                <button className="employer-btn-approve" onClick={() => update(a.id, "approved")}>Approve</button>
-                <button className="employer-btn-reject" onClick={() => update(a.id, "rejected")}>Decline</button>
+                <button className="employer-btn-approve" onClick={() => update(a.id, "approved")}>{t("Approve")}</button>
+                <button className="employer-btn-reject" onClick={() => update(a.id, "rejected")}>{t("Decline")}</button>
               </div>
             </div>
           ))}

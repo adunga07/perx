@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
+import { useTranslationStore, getLangDict } from "../../store/translationStore";
 import { Avatar } from "../ui/Avatar";
 import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
@@ -99,6 +100,9 @@ export function Sidebar() {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+  const lang = useTranslationStore((s) => s.lang);
+  const dict = getLangDict(lang);
+  const t = (key) => dict?.[key] ?? key;
   const links = NAV_LINKS[role] ?? NAV_LINKS.employee;
 
   const handleSignOut = () => {
@@ -153,7 +157,7 @@ export function Sidebar() {
             <span className="sidebar-icon" aria-hidden="true">
               {link.icon}
             </span>
-            <span>{link.label}</span>
+            <span>{t(link.label)}</span>
           </NavLink>
         ))}
       </div>
@@ -165,7 +169,7 @@ export function Sidebar() {
         onClick={handleSignOut}
         className="sidebar-signout"
       >
-        Sign out
+        {t("Sign out")}
       </Button>
     </nav>
   );
