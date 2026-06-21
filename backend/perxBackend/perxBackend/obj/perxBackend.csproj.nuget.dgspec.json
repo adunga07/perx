@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Albert\\OneDrive\\Desktop\\perx\\perx\\backend\\perxBackend\\perxBackend\\perxBackend.csproj": {}
+    "C:\\perx\\backend\\perxBackend\\perxBackend\\perxBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Albert\\OneDrive\\Desktop\\perx\\perx\\backend\\perxBackend\\perxBackend\\perxBackend.csproj": {
+    "C:\\perx\\backend\\perxBackend\\perxBackend\\perxBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Albert\\OneDrive\\Desktop\\perx\\perx\\backend\\perxBackend\\perxBackend\\perxBackend.csproj",
+        "projectUniqueName": "C:\\perx\\backend\\perxBackend\\perxBackend\\perxBackend.csproj",
         "projectName": "perxBackend",
-        "projectPath": "C:\\Users\\Albert\\OneDrive\\Desktop\\perx\\perx\\backend\\perxBackend\\perxBackend\\perxBackend.csproj",
-        "packagesPath": "C:\\Users\\Albert\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Albert\\OneDrive\\Desktop\\perx\\perx\\backend\\perxBackend\\perxBackend\\obj\\",
+        "projectPath": "C:\\perx\\backend\\perxBackend\\perxBackend\\perxBackend.csproj",
+        "packagesPath": "C:\\Users\\edime\\.nuget\\packages\\",
+        "outputPath": "C:\\perx\\backend\\perxBackend\\perxBackend\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Albert\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\edime\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -109,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
