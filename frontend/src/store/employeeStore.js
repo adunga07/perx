@@ -46,6 +46,6 @@ export const useEmployeeStore = create(
         set((s) => ({ employees: s.employees.filter((e) => e.id !== id) }))
       },
     }),
-    { name: 'perx-employees' },
+    { name: 'perx-employees-v2' },
   ),
 )
